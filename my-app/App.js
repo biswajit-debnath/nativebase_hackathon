@@ -1,15 +1,23 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NativeBaseProvider } from "native-base";
-import React, { useMemo, useState } from "react";
+import { HStack, NativeBaseProvider, Spinner } from "native-base";
+import React, { useEffect, useMemo, useState } from "react";
 import AuthContext from "./contexts/AuthContext";
-import FreighterLogin from "./screens/FreighterLogin";
+import Register from "./screens/Register";
 import HomePage from "./screens/HomePage";
+import authHelper from "./utils/authHelper";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(async () => {
+        const token = await authHelper.getToken();
+        setIsSignedIn(Boolean(token));
+        setLoading(false);
+    }, []);
 
     const authContextValue = useMemo(
         () => ({
@@ -18,6 +26,23 @@ export default function App() {
         }),
         [isSignedIn]
     );
+
+    if (isLoading) {
+        return (
+            <NativeBaseProvider>
+                <HStack
+                    space={8}
+                    justifyContent="center"
+                    alignItems="center"
+                    height="full"
+                    width="full"
+                >
+                    <Spinner size="lg" />
+                </HStack>
+            </NativeBaseProvider>
+        );
+    }
+
     return (
         <NavigationContainer>
             <NativeBaseProvider>
@@ -25,8 +50,8 @@ export default function App() {
                     <Stack.Navigator initialRouteName="Home">
                         {!isSignedIn ? (
                             <Stack.Screen
-                                name="Login"
-                                component={FreighterLogin}
+                                name="Register"
+                                component={Register}
                                 options={{ headerShown: false }}
                             />
                         ) : (

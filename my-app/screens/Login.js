@@ -1,8 +1,8 @@
 import { Container } from "native-base";
 import React, { useState } from "react";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/RegisterForm";
 
-export default function FreighterLogin() {
+export default function Login() {
     const [loginType, setLoginType] = useState("FREIGHTER");
 
     const changeLoginMode = () => {
