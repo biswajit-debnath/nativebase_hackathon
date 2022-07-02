@@ -1,6 +1,10 @@
-import { Text } from "native-base";
+import { Container, Text } from "native-base";
 import React from "react";
 
 export default function Loads() {
-    return <Text>Loads</Text>;
+    return (
+        <Container safeArea>
+            <Text>Loads</Text>
+        </Container>
+    );
 }

@@ -1,6 +1,10 @@
-import { Text } from "native-base";
+import { Container, Text } from "native-base";
 import React from "react";
 
 export default function Bids() {
-    return <Text>Bids</Text>;
+    return (
+        <Container safeArea>
+            <Text>bids</Text>
+        </Container>
+    );
 }
