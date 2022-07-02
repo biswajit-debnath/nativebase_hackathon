@@ -1,16 +1,21 @@
-import { Center, Container, Text, View, VStack } from "native-base";
+import { Container, Text } from "native-base";
 import React from "react";
+import Bids from "../tabs/Bids";
+import Loads from "../tabs/Loads";
+import Trips from "../tabs/Trips";
 
 export default function HomePage() {
-    console.log("hello");
-
     return (
-        <View>
-            <VStack>
-                <Center>
-                    <Text>hello world</Text>
-                </Center>
-            </VStack>
-        </View>
+        <Tabs>
+            <Tab heading="Loads">
+                <Loads />
+            </Tab>
+            <Tab heading="Bids">
+                <Bids />
+            </Tab>
+            <Tab heading="Trips">
+                <Trips />
+            </Tab>
+        </Tabs>
     );
 }
