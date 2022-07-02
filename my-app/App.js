@@ -48,19 +48,19 @@ export default function App() {
             <NativeBaseProvider>
                 <AuthContext.Provider value={authContextValue}>
                     <Stack.Navigator initialRouteName="Home">
-                        {!isSignedIn ? (
+                        {/* {!isSignedIn ? (
                             <Stack.Screen
                                 name="Register"
                                 component={Register}
                                 options={{ headerShown: false }}
                             />
-                        ) : (
+                        ) : ( */}
                             <Stack.Screen
                                 name="Home"
                                 component={HomePage}
                                 options={{ headerShown: false }}
                             />
-                        )}
+                        {/* )} */}
                     </Stack.Navigator>
                 </AuthContext.Provider>
             </NativeBaseProvider>
