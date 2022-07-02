@@ -7,8 +7,6 @@ import Trips from "../tabs/Trips";
 const Tab = createBottomTabNavigator();
 
 export default function HomePage() {
-    const isLoggedIn = "";
-
     return (
         <Tab.Navigator>
             <Tab.Screen
