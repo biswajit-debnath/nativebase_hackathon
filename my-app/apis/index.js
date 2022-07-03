@@ -134,4 +134,22 @@ const acceptBid = async (load_id, bid_id) => {
     }
 };
 
-export default { register, login, validateAuthCode, getVehicleMaster };
+const rejectBid = async (bid_id) => {
+    try {
+        const result = await axios.get(`${BASE_URL}/bid/rejectBid/${bid_id}`);
+        return result.data;
+    } catch (error) {
+        console.log(error.message);
+        return false;
+    }
+};
+
+export default {
+    register,
+    login,
+    validateAuthCode,
+    getVehicleMaster,
+    createLoad,
+    getFreighterLoads,
+    deleteLoad,
+};

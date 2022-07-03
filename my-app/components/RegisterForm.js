@@ -58,10 +58,9 @@ export default function RegisterForm({ isCarrierUser, changeUserMode }) {
             userType
         );
 
-        console.log(result);
-
         if (result.status === "success") {
             await authHelper.setToken(result.data?._id);
+            await authHelper.setUserType(result.data?.userType);
             return setIsSignedIn(Boolean(result.data?._id));
         }
 

@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HStack, NativeBaseProvider, Spinner } from "native-base";
 import React, { useEffect, useMemo, useState } from "react";
 import AuthContext from "./contexts/AuthContext";
-import Register from "./screens/Register";
+import AuthScreen from "./screens/AuthScreen";
 import HomePage from "./screens/HomePage";
 import authHelper from "./utils/authHelper";
 
@@ -48,19 +48,19 @@ export default function App() {
             <NativeBaseProvider>
                 <AuthContext.Provider value={authContextValue}>
                     <Stack.Navigator initialRouteName="Home">
-                        {/* {!isSignedIn ? (
+                        {!isSignedIn ? (
                             <Stack.Screen
-                                name="Register"
-                                component={Register}
+                                name="Auth"
+                                component={AuthScreen}
                                 options={{ headerShown: false }}
                             />
-                        ) : ( */}
+                        ) : (
                             <Stack.Screen
                                 name="Home"
                                 component={HomePage}
                                 options={{ headerShown: false }}
                             />
-                        {/* )} */}
+                        )}
                     </Stack.Navigator>
                 </AuthContext.Provider>
             </NativeBaseProvider>
