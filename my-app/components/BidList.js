@@ -7,7 +7,7 @@ export default function BidList({loadId}) {
     const [data,setData] = useState([])
 
     useEffect(async () => {
-            const result = loadId ? await api.getBidsByLoadId(loadId) : await api.getBidsByUserId();
+            const result = await api.getBidsByCarrierId();
             console.log(result);
             if (result.status === "success") {
                 setData(result?.data || []);

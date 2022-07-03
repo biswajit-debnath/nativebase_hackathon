@@ -8,11 +8,15 @@ import {
     VStack,
     Button,
     Image,
+    Input,
+    useToast,
 } from "native-base";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import loadingImage from "../assets/loading.png";
 import unloadingImage from "../assets/unloading.png";
 import moment from "moment";
+import authHelper from "../utils/authHelper";
+import apis from "../apis";
 
 function LoadItem({
     from: loadingPoint,
@@ -24,6 +28,30 @@ function LoadItem({
     id,
     navigation
 }) {
+    const [isCarrier, setIsCarrier] = useState(false);
+    const [bidAmount, setBitAmout] = useState("");
+    const toast = useToast()
+    useEffect(async ()=> {
+        const isFreighter = await authHelper.getUserType() == "FREIGHTER"; 
+        setIsCarrier(!isFreighter) 
+    },[])
+
+    const onSubmit =async () => {
+        const user_id = await authHelper.getToken()
+        console.log("testestse",id,user_id,bidAmount)
+        const response = await apis.addBid(id, user_id, bidAmount)
+        if(response.status == "success")
+             toast.show({
+                description: "Bid Placed Successfully.",
+                bgColor: "green.600",
+            });
+        else 
+            toast.show({
+                description: "Some Error Occured While Bidding.",
+                bgColor: "red.600",
+            });
+        console.log(response)
+    }
     return (
         <Box px={3} py={3} bgColor={"white"} rounded={10} mb={4}>
             <VStack>
@@ -61,10 +89,17 @@ function LoadItem({
                             {date ? moment(date).format("DD-MM-YYYY") : ""}
                         </Text>
 
+                        { isCarrier ? 
+                        <HStack ml={78} height={10}>
+                            <Input width={24} mr={1} placeholder="Bid Amount." onChangeText={(value)=>setBitAmout(value)}/>
+                            <Button onPress={onSubmit}>Submit</Button>
+                        </HStack>
+                            :
                         <Button ml={215} bgColor="blueGray.800"
-                                 onPress={()=> navigation.navigate('Bids', { loadId: id })}   >
+                                onPress={()=> console.log()}  >
                             Bids
-                        </Button>
+                    </Button>}
+                        
                     </HStack>
                 </Box>
             </VStack>

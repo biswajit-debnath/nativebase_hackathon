@@ -113,9 +113,11 @@ const getFreighterLoads = async () => {
 const getCarrierLoads = async () => {
     try {
         const user_id = await authHelper.getToken();
+        console.log(user_id,"test")
         const result = await axios.get(
             `${BASE_URL}/carrier/getLoads/${user_id}`
         );
+        console.log(result)
         return result.data;
     } catch (error) {
         console.log(error.message);
@@ -148,10 +150,36 @@ const getBidsByUserId = async () => {
     }
 };
 
+const getBidsByCarrierId = async () => {
+    try {
+        const user_id = await authHelper.getToken();
+        const result = await axios.get(
+            `${BASE_URL}/carrier/getBids/${user_id}`
+        );
+        return result.data;
+    } catch (error) {
+        console.log(error.message);
+        return false;
+    }
+};
+
+const addBid = async (load_id, carrier_id, amount) => {
+    try {
+        const result = await axios.post(`${BASE_URL}/bid/post`, {
+            load_id,
+            carrier_id,
+            amount
+        });
+        return result.data;
+    } catch (error) {
+        console.log(error.message);
+        return false;
+    }
+};
 
 const acceptBid = async (load_id, bid_id) => {
     try {
-        const result = await axios.post(`${BASE_URL}/trip/post`, {
+        const result = await axios.post(`${BASE_URL}/bid/post`, {
             load_id,
             bid_id,
         });
@@ -182,5 +210,7 @@ export default {
     deleteLoad,
     getBidsByUserId,
     getBidsByLoadId,
-    getCarrierLoads
+    getCarrierLoads,
+    addBid,
+    getBidsByCarrierId
 };

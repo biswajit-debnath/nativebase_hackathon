@@ -2,9 +2,8 @@ import { Container, HStack, Icon, Text, Fab, AddIcon, Heading, Box, Avatar, Flat
 import React from "react";
 import BidList from "../components/BidList";
 
-export default function Bids({ route }) {
-    const { loadId } = route.params;
+export default function Bids() {
     return (
-       <BidList loadId={loadId}/>
+       <BidList/>
     );
 }

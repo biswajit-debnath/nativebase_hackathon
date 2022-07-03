@@ -26,9 +26,12 @@ export default function Loads(props) {
 
     useEffect(async () => {
         if (!loadPostModalVisible) {
-            const result = await api.getFreighterLoads();
+            const isFreighter = await authHelper.getUserType() == "FREIGHTER"; 
+            const result = isFreighter
+                            ? await api.getFreighterLoads() 
+                            : await api.getCarrierLoads();
 
-
+            console.log(result,isFreighter, 'test2')
             if (result.status === "success") {
                 setData(result?.data || []);
             }
@@ -52,7 +55,7 @@ export default function Loads(props) {
                 )}
                 keyExtractor={(item) => item.id}
             />
-            {showFab && props.route?.name == "Loads" ? (
+            {showFab && (props.route.name == "Loads") ? (
                 <Fab
                     position="absolute"
                     shadow={2}
