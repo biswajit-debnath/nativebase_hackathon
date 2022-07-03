@@ -49,25 +49,18 @@ export default function App() {
             <NativeBaseProvider>
                 <AuthContext.Provider value={authContextValue}>
                     <Stack.Navigator initialRouteName="Home">
-                        {!isSignedIn ? (
+                    {!isSignedIn ? (
                             <Stack.Screen
                                 name="Auth"
                                 component={AuthScreen}
                                 options={{ headerShown: false }}
                             />
                         ) : (
-                            <>
-                                <Stack.Screen
-                                    name="Home"
-                                    component={HomePage}
-                                    options={{ headerShown: false }}
-                                />
-                                <Stack.Screen
-                                    name="Bids"
-                                    component={Bids}
-                                    options={{ headerShown: false }}
-                                />
-                            </>
+                            <Stack.Screen
+                                name="Home"
+                                component={HomePage}
+                                options={{ headerShown: false }}
+                            />
                         )}
                     </Stack.Navigator>
                 </AuthContext.Provider>

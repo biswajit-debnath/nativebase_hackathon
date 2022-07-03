@@ -28,7 +28,6 @@ export default function Loads(props) {
         if (!loadPostModalVisible) {
             const result = await api.getFreighterLoads();
 
-            console.log(result);
 
             if (result.status === "success") {
                 setData(result?.data || []);
@@ -36,9 +35,12 @@ export default function Loads(props) {
         }
     }, [loadPostModalVisible]);
 
-    useEffect(async () => {
-        setShowFab((await authHelper.getUserType()) == "FREIGHTER");
-    }, []);
+    useEffect(async ()=> {
+        //authHelper.setToken("")
+        const isFreighter = await authHelper.getUserType() == "FREIGHTER"; 
+        console.log(isFreighter)
+        setShowFab(isFreighter) 
+    },[])
 
     return (
         <Container safeArea px={3} py={3} position="relative">

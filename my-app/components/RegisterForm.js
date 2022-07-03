@@ -59,9 +59,9 @@ export default function RegisterForm({ isCarrierUser, changeUserMode }) {
         );
 
         if (result.status === "success") {
-            await authHelper.setToken(result.data?.id);
-            await authHelper.setUserType(result.data?.userType);
-            return setIsSignedIn(Boolean(result.data?.id));
+            await authHelper.setToken(result.data?._id);
+            await authHelper.setUserType(result.data?.userType ? result.data.userType : "FREIGHTER");
+            return setIsSignedIn(Boolean(result.data?._id));
         }
 
         return toast.show({

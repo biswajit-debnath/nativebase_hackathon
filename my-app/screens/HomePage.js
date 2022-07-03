@@ -50,7 +50,7 @@ export default function HomePage() {
                     ),
                 }}
             />
-            {/* <Tab.Screen
+            <Tab.Screen
                 name="Bids"
                 component={Bids}
                 options={{
@@ -58,7 +58,7 @@ export default function HomePage() {
                     tabBarIcon: ({focused}) => (<Image
                         source={focused ? Bidding_Dark : Bidding_Light} style={{ width: 25, height: 25 }} alt="Bid Icon" />)
                     }}
-            /> */}
+            />
             <Tab.Screen
                 name="Trips"
                 component={Trips}

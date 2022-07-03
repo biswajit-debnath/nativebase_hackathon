@@ -70,6 +70,7 @@ const getVehicleMaster = async () => {
 const createLoad = async (from, to, prod_type, weight, date, max_amount) => {
     try {
         const user_id = await authHelper.getToken();
+        console.log(user_id,"user")
         const result = await axios.post(`${BASE_URL}/load/post`, {
             user_id,
             from,
@@ -81,7 +82,7 @@ const createLoad = async (from, to, prod_type, weight, date, max_amount) => {
         });
         return result.data;
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
         return false;
     }
 };

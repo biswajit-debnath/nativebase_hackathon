@@ -7,23 +7,28 @@ export default function BidList({loadId}) {
     const [data,setData] = useState([])
 
     useEffect(async () => {
-            const result = loadId ? await api.getBidsByLoadId(loadId) :await api.getBidsByUserId();
+            const result = loadId ? await api.getBidsByLoadId(loadId) : await api.getBidsByUserId();
             console.log(result);
             if (result.status === "success") {
                 setData(result?.data || []);
             }
     },[]);
   return (
-    <Container safeArea px={5} py={3} position="relative">    
-    <FlatList 
-        width={370}
-        data={data}
-        renderItem={({item})=>
-            <BidItem 
-                {...item} />
-        }
-        keyExtractor={item => item.id} 
-    />
+    <Container safeArea px={5} py={3} position="relative">   
+    {
+        data.length ? <FlatList 
+                            width={370}
+                            data={data}
+                            renderItem={({item})=>
+                                <BidItem 
+                                    {...item} />
+                            }
+                            keyExtractor={item => item.id} 
+                        />
+                    :
+                    <Text >No Bids Found</Text>
+    } 
+    
     </Container>
   )
 }

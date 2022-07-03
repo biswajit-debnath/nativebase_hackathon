@@ -50,7 +50,7 @@ export default function LoginForm({ isCarrierUser, changeUserMode }) {
 
         if (result.status === "success") {
             await authHelper.setToken(result.data?.id);
-            await authHelper.setUserType(result.data?.userType);
+            await authHelper.setUserType(result.data.userType ? result.data.userType : "FREIGHTER");
             return setIsSignedIn(Boolean(result.data?.id));
         }
 
