@@ -3,7 +3,7 @@ import React from 'react'
 import loadingImage from "../assets/procurement.png"
 import unloadingImage from "../assets/container.png"
 
-export default function BidItem({loadingPoint, unloadingPoint, vehicleType, vehicleCapacity, loadingDate}) {
+export default function BidItem({carrierName, vehicleType, amount}) {
   
   return (
     <Box 
@@ -23,7 +23,7 @@ export default function BidItem({loadingPoint, unloadingPoint, vehicleType, vehi
                         borderRadius={250} 
                         source={unloadingImage} 
                         alt="Alternate Text" />
-                    <Text bold> {unloadingPoint}</Text>
+                    <Text bold> {carrierName}</Text>
                 </HStack>
             </Box>
             <Box mt={1}>
@@ -32,23 +32,24 @@ export default function BidItem({loadingPoint, unloadingPoint, vehicleType, vehi
                         bold 
                         color={"blueGray.500"}>{vehicleType}</Text>
 
-                    <Text 
-                        ml={230}
-                        bold
-                        color={"blueGray.500"}>{vehicleCapacity} </Text>
                 </HStack>
 
                 <HStack space={1} mt={2}>
                     <Text 
                         mt={1}
                         bold
-                        color={"blueGray.700"}>{loadingDate}</Text>
+                        color={"blueGray.700"}>{"Rs. " + amount}</Text>
 
                     <Button 
-                        ml={215} 
+                        ml={145} 
                         bgColor="blueGray.800"
                         
-                        >Bids</Button>
+                        >Accept</Button>
+                    <Button 
+                        ml={1} 
+                        bgColor="red.600"
+                        
+                        >Reject</Button>
                 </HStack>
 
             </Box>

@@ -17,11 +17,12 @@ import React, { useEffect, useState } from "react";
 import api from "../apis";
 import LoadItem from "../components/LoadItem";
 import LoadPostModel from "../components/LoadPostModel";
+import authHelper from "../utils/authHelper";
 
-export default function Loads() {
+export default function Loads(props) {
     const [loadPostModalVisible, setLoadPostModalVisible] = useState(false);
-
     const [data, setData] = useState([]);
+    const [showFab, setShowFab] = useState(false);
 
     useEffect(async () => {
         if (!loadPostModalVisible) {
@@ -35,15 +36,19 @@ export default function Loads() {
         }
     }, [loadPostModalVisible]);
 
+    useEffect(async ()=> {
+        setShowFab(await authHelper.getUserType() == "FREIGHTER") 
+    },[])
+
     return (
         <Container safeArea px={3} py={3} position="relative">
             <FlatList
                 width={370}
                 data={data}
-                renderItem={({ item }) => <LoadItem {...item} />}
+                renderItem={({ item }) => <LoadItem navigation = {props.navigation} {...item} />}
                 keyExtractor={(item) => item.id}
             />
-            <Fab
+            {showFab && (props.route.name == "Loads") ? <Fab
                 position="absolute"
                 shadow={2}
                 bottom="20"
@@ -52,7 +57,7 @@ export default function Loads() {
                 bgColor="blueGray.700"
                 onPress={() => setLoadPostModalVisible(true)}
                 icon={<AddIcon />}
-            />
+            /> : null}
 
             <LoadPostModel
                 isOpen={loadPostModalVisible}

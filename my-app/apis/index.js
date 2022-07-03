@@ -109,6 +109,19 @@ const getFreighterLoads = async () => {
     }
 };
 
+const getCarrierLoads = async () => {
+    try {
+        const user_id = await authHelper.getToken();
+        const result = await axios.get(
+            `${BASE_URL}/carrier/getLoads/${user_id}`
+        );
+        return result.data;
+    } catch (error) {
+        console.log(error.message);
+        return false;
+    }
+};
+
 const getBidsByLoadId = async (loadId) => {
     try {
         const result = await axios.get(
@@ -120,6 +133,20 @@ const getBidsByLoadId = async (loadId) => {
         return false;
     }
 };
+
+const getBidsByUserId = async () => {
+    try {
+        const user_id = await authHelper.getToken();
+        const result = await axios.get(
+            `${BASE_URL}/bid/getAllBidsByUserId/${user_id}`
+        );
+        return result.data;
+    } catch (error) {
+        console.log(error.message);
+        return false;
+    }
+};
+
 
 const acceptBid = async (load_id, bid_id) => {
     try {
@@ -152,4 +179,7 @@ export default {
     createLoad,
     getFreighterLoads,
     deleteLoad,
+    getBidsByUserId,
+    getBidsByLoadId,
+    getCarrierLoads
 };

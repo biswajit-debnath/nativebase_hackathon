@@ -1,26 +1,18 @@
 import { Container, HStack, Icon, Text, Fab, AddIcon, Heading, Box, Avatar, FlatList, VStack, Spacer, useToast } from "native-base";
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import BidItem from "./BidItem";
+import api from "../apis";
 
-export default function BidList() {
-    const [loadPostModalVisible, setLoadPostModalVisible] = React.useState(false);
+export default function BidList({loadId}) {
+    const [data,setData] = useState([])
 
-    const data = [{
-        id:1,
-        loadingPoint:"Beltola, Guwahati, Assam",
-        unloadingPoint:"White field, Bangalore, Karnataka",
-        vehicleCapacity:"12 MT",
-        vehicleType:"Daala Body",
-        loadingDate:"12-07-2022",
-    },
-    {   
-        id:2,
-        loadingPoint:"Beltola, Guwahati, Assam",
-        unloadingPoint:"White field, Bangalore, Karnataka",
-        vehicleCapacity:"Daala Body",
-        vehicleType:"12 MT",
-        loadingDate:"12-07-2022",
-    }];
+    useEffect(async () => {
+            const result = loadId ? await api.getBidsByLoadId(loadId) :await api.getBidsByUserId();
+            console.log(result);
+            if (result.status === "success") {
+                setData(result?.data || []);
+            }
+    },[]);
   return (
     <Container safeArea px={5} py={3} position="relative">    
     <FlatList 

@@ -21,6 +21,8 @@ function LoadItem({
     date,
     prod_type,
     max_amount,
+    id,
+    navigation
 }) {
     return (
         <Box px={3} py={3} bgColor={"white"} rounded={10} mb={4}>
@@ -59,7 +61,8 @@ function LoadItem({
                             {date ? moment(date).format("DD-MM-YYYY") : ""}
                         </Text>
 
-                        <Button ml={215} bgColor="blueGray.800">
+                        <Button ml={215} bgColor="blueGray.800"
+                                 onPress={()=> navigation.navigate('Bids', { loadId: id })}   >
                             Bids
                         </Button>
                     </HStack>
