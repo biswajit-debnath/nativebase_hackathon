@@ -6,7 +6,6 @@ import {
     InfoIcon,
     Text,
     VStack,
-    Spacer,
     Button,
     Image,
 } from "native-base";

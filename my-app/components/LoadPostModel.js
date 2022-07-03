@@ -1,8 +1,28 @@
-import { Button, FormControl, Input, Modal, Text, useToast } from "native-base";
+import {
+    Button,
+    CheckIcon,
+    FormControl,
+    Input,
+    Modal,
+    Select,
+    Text,
+    useToast,
+} from "native-base";
 import React from "react";
 import { Keyboard } from "react-native";
 import moment from "moment";
 import api from "../apis";
+
+const cities = [
+    "Bengaluru",
+    "Delhi",
+    "Kolkata",
+    "Indore",
+    "Chennai",
+    "Guwahati",
+    "Jaipur",
+    "Hyderabad",
+];
 
 export default function LoadPostModel({ isOpen, setOpen }) {
     const toast = useToast();
@@ -76,13 +96,13 @@ export default function LoadPostModel({ isOpen, setOpen }) {
             onClose={() => setOpen(false)}
             safeAreaTop={true}
         >
-            <Modal.Content maxWidth="350">
+            <Modal.Content maxWidth="380">
                 <Modal.CloseButton />
                 <Modal.Header>
                     <Text bold>Post Load</Text>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormControl width={280} px={4} isRequired>
+                    <FormControl width="full" px={4} isRequired>
                         <FormControl.Label
                             _text={{
                                 bold: true,
@@ -90,14 +110,31 @@ export default function LoadPostModel({ isOpen, setOpen }) {
                         >
                             Loading Point
                         </FormControl.Label>
-                        <Input
-                            placeholder="City"
-                            onChangeText={(value) =>
-                                setData({ ...formData, loadingPoint: value })
+                        <Select
+                            selectedValue={formData.loadingPoint}
+                            minWidth="200"
+                            accessibilityLabel="Loading point"
+                            placeholder="Loading Point"
+                            _selectedItem={{
+                                bg: "blueGray.200",
+                                endIcon: <CheckIcon size="5" />,
+                                borderRadius: 8,
+                            }}
+                            onValueChange={(itemValue) =>
+                                setData({
+                                    ...formData,
+                                    loadingPoint: itemValue,
+                                })
                             }
-                            value={formData.loadingPoint}
-                            type="text"
-                        />
+                        >
+                            {cities.map((city, index) => (
+                                <Select.Item
+                                    key={index}
+                                    label={city}
+                                    value={city}
+                                />
+                            ))}
+                        </Select>
 
                         <FormControl.Label
                             _text={{
@@ -107,14 +144,31 @@ export default function LoadPostModel({ isOpen, setOpen }) {
                         >
                             Unloading Point
                         </FormControl.Label>
-                        <Input
-                            placeholder="City"
-                            onChangeText={(value) =>
-                                setData({ ...formData, unloadingPoint: value })
+                        <Select
+                            selectedValue={formData.unloadingPoint}
+                            minWidth="200"
+                            accessibilityLabel="Unloading point"
+                            placeholder="Unloading Point"
+                            _selectedItem={{
+                                bg: "blueGray.200",
+                                endIcon: <CheckIcon size="5" />,
+                                borderRadius: 8,
+                            }}
+                            onValueChange={(itemValue) =>
+                                setData({
+                                    ...formData,
+                                    unloadingPoint: itemValue,
+                                })
                             }
-                            value={formData.unloadingPoint}
-                            type="text"
-                        />
+                        >
+                            {cities.map((city, index) => (
+                                <Select.Item
+                                    key={index}
+                                    label={city}
+                                    value={city}
+                                />
+                            ))}
+                        </Select>
 
                         <FormControl.Label
                             _text={{
