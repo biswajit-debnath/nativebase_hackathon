@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import AuthContext from "./contexts/AuthContext";
 import AuthScreen from "./screens/AuthScreen";
 import HomePage from "./screens/HomePage";
+import Bids from "./tabs/Bids";
 import authHelper from "./utils/authHelper";
 
 const Stack = createNativeStackNavigator();
@@ -55,11 +56,18 @@ export default function App() {
                                 options={{ headerShown: false }}
                             />
                         ) : (
-                            <Stack.Screen
-                                name="Home"
-                                component={HomePage}
-                                options={{ headerShown: false }}
-                            />
+                            <>
+                                <Stack.Screen
+                                    name="Home"
+                                    component={HomePage}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="Bids"
+                                    component={Bids}
+                                    options={{ headerShown: false }}
+                                />
+                            </>
                         )}
                     </Stack.Navigator>
                 </AuthContext.Provider>
