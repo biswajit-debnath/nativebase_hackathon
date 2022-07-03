@@ -24,11 +24,9 @@ function LoadItem({
     to: unloadingPoint,
     weight,
     date,
-    prod_type,
     max_amount,
     id,
-    isActive,
-    navigation
+    isActive
 }) {
     const [isCarrier, setIsCarrier] = useState(false);
     const [bidAmount, setBitAmout] = useState("");
@@ -90,7 +88,7 @@ function LoadItem({
                             {date ? moment(date).format("DD-MM-YYYY") : ""}
                         </Text>
 
-                        { isCarrier ? 
+                        { isActive && isCarrier ? 
                         <HStack ml={78} height={10}>
                             <Input width={24} mr={1} placeholder="Bid Amount." onChangeText={(value)=>setBitAmout(value)}/>
                             <Button onPress={onSubmit}>Submit</Button>
