@@ -4,7 +4,7 @@ import { Container, Text } from "native-base";
 export default function Trips() {
     return (
         <Container safeArea>
-            <Text>tRPS</Text>
+            <Text>Under Construction</Text>
         </Container>
     );
 }

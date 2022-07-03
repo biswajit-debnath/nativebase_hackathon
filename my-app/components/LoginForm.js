@@ -27,7 +27,6 @@ export default function LoginForm({ isCarrierUser, changeUserMode }) {
 
     const loginUser = async () => {
         const userType = isCarrierUser ? "CARRIER" : "FREIGHTER";
-        console.log(userType,"isCarrier")
 
         if (!formData.otp) {
             return toast.show({
@@ -47,12 +46,10 @@ export default function LoginForm({ isCarrierUser, changeUserMode }) {
             userType
         );
 
-        console.log(result, "result for login");
 
         if (result.status === "success") {
             await authHelper.setToken(result.data?.id);
             await authHelper.setUserType(result.data.userType);
-            console.log("userType",await authHelper.setUserType(result.data.userType))
             return setIsSignedIn(Boolean(result.data?.id));
         }
 

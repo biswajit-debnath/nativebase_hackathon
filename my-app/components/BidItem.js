@@ -1,9 +1,46 @@
-import { Avatar, Box, HStack, Icon, InfoIcon, Text, VStack, Spacer, Button, Image } from 'native-base'
-import React from 'react'
-import loadingImage from "../assets/procurement.png"
+import { Box, Button, HStack, Image, Text, useToast, VStack } from 'native-base'
+import { useEffect, useState } from 'react'
 import unloadingImage from "../assets/container.png"
+import authHelper from '../utils/authHelper'
+import apis from '../apis'
 
-export default function BidItem({carrierName, vehicleType, amount}) {
+export default function BidItem({name:carrierName, vehicleName:vehicleType, amount, id}) {
+    const [isCarrier, setIsCarrier] = useState(false);
+    const toast = useToast();
+    
+    useEffect(async ()=> {
+        const isFreighter = await authHelper.getUserType() == "FREIGHTER"; 
+        setIsCarrier(!isFreighter) 
+    },[])
+
+    const acceptBid =async ()=> {
+       const response =  await apis.acceptBid(id);
+        if(response.status == "success")
+             toast.show({
+                description: "Bid Placed Successfully.",
+                bgColor: "green.600",
+            });
+        else 
+            toast.show({
+                description: "Some Error Occured While Bidding.",
+                bgColor: "red.600",
+            });
+    }
+    const rejectBid =async ()=> {
+        
+        const response = await apis.rejectBid(id); 
+        if(response.status == "success")
+             toast.show({
+                description: "Bid Placed Successfully.",
+                bgColor: "green.600",
+            });
+        else 
+            toast.show({
+                description: "Some Error Occured While Bidding.",
+                bgColor: "red.600",
+            });
+
+    }
   
   return (
     <Box 
@@ -38,22 +75,23 @@ export default function BidItem({carrierName, vehicleType, amount}) {
                     <Text 
                         mt={1}
                         bold
-                        color={"blueGray.700"}>{"Rs. " + amount}</Text>
+                        color={"blueGray.700"}>{"Bid Amount: Rs. " + amount}</Text>
 
-                    <Button 
-                        ml={145} 
-                        bgColor="blueGray.800"
-                        
-                        >Accept</Button>
-                    <Button 
-                        ml={1} 
-                        bgColor="red.600"
-                        
-                        >Reject</Button>
+                    {!isCarrier ? 
+                        <HStack ml={70}>
+                            <Button 
+                            bgColor = "blueGray.800"
+                            onPress = {acceptBid}
+                            >Accept</Button>
+                        <Button 
+                            ml={1} 
+                            bgColor="red.600"
+                            onPress = {rejectBid}
+                            >Reject
+                        </Button>
+                    </HStack>: <Text ml={120}>Carrier Bid</Text>}
                 </HStack>
-
             </Box>
-
         </VStack>
     </Box>
   )

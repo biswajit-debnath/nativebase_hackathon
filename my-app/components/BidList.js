@@ -2,13 +2,16 @@ import { Container, HStack, Icon, Text, Fab, AddIcon, Heading, Box, Avatar, Flat
 import React, { useState, useEffect } from 'react'
 import BidItem from "./BidItem";
 import api from "../apis";
+import authHelper from "../utils/authHelper";
 
 export default function BidList({loadId}) {
     const [data,setData] = useState([])
 
     useEffect(async () => {
-            const result = await api.getBidsByCarrierId();
-            console.log(result);
+            const isFreighter = await authHelper.getUserType() == "FREIGHTER"; 
+            const result = !isFreighter 
+                            ? await api.getBidsByCarrierId()
+                            : await api.getBidsByFreighterId();
             if (result.status === "success") {
                 setData(result?.data || []);
             }

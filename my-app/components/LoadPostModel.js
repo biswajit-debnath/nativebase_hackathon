@@ -71,7 +71,6 @@ export default function LoadPostModel({ isOpen, setOpen }) {
             maxAmount
         );
 
-        console.log(result);
 
         if (result.status === "success") {
             setOpen(false);

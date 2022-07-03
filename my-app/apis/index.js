@@ -70,7 +70,6 @@ const getVehicleMaster = async () => {
 const createLoad = async (from, to, prod_type, weight, date, max_amount) => {
     try {
         const user_id = await authHelper.getToken();
-        console.log(user_id,"user")
         const result = await axios.post(`${BASE_URL}/load/post`, {
             user_id,
             from,
@@ -113,11 +112,9 @@ const getFreighterLoads = async () => {
 const getCarrierLoads = async () => {
     try {
         const user_id = await authHelper.getToken();
-        console.log(user_id,"test")
         const result = await axios.get(
             `${BASE_URL}/carrier/getLoads/${user_id}`
         );
-        console.log(result)
         return result.data;
     } catch (error) {
         console.log(error.message);
@@ -163,6 +160,19 @@ const getBidsByCarrierId = async () => {
     }
 };
 
+const getBidsByFreighterId = async () => {
+    try {
+        const user_id = await authHelper.getToken();
+        const result = await axios.get(
+            `${BASE_URL}/user/getBids/${user_id}`
+        );
+        return result.data;
+    } catch (error) {
+        console.log(error.message);
+        return false;
+    }
+};
+
 const addBid = async (load_id, carrier_id, amount) => {
     try {
         const result = await axios.post(`${BASE_URL}/bid/post`, {
@@ -177,11 +187,10 @@ const addBid = async (load_id, carrier_id, amount) => {
     }
 };
 
-const acceptBid = async (load_id, bid_id) => {
+const acceptBid = async (bid_id) => {
     try {
-        const result = await axios.post(`${BASE_URL}/bid/post`, {
-            load_id,
-            bid_id,
+        const result = await axios.post(`${BASE_URL}/trip/post`, {
+            bid_id
         });
         return result.data;
     } catch (error) {
@@ -192,7 +201,7 @@ const acceptBid = async (load_id, bid_id) => {
 
 const rejectBid = async (bid_id) => {
     try {
-        const result = await axios.get(`${BASE_URL}/bid/rejectBid/${bid_id}`);
+        const result = await axios.delete(`${BASE_URL}/bid/delete/${bid_id}`);
         return result.data;
     } catch (error) {
         console.log(error.message);
@@ -212,5 +221,8 @@ export default {
     getBidsByLoadId,
     getCarrierLoads,
     addBid,
-    getBidsByCarrierId
+    getBidsByCarrierId,
+    getBidsByFreighterId,
+    acceptBid,
+    rejectBid
 };

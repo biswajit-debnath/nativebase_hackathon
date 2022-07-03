@@ -31,7 +31,6 @@ export default function Loads(props) {
                             ? await api.getFreighterLoads() 
                             : await api.getCarrierLoads();
 
-            console.log(result,isFreighter, 'test2')
             if (result.status === "success") {
                 setData(result?.data || []);
             }
@@ -39,9 +38,8 @@ export default function Loads(props) {
     }, [loadPostModalVisible]);
 
     useEffect(async ()=> {
-        //authHelper.setToken("")
+        //await authHelper.setToken("")
         const isFreighter = await authHelper.getUserType() == "FREIGHTER"; 
-        console.log(isFreighter)
         setShowFab(isFreighter) 
     },[])
 

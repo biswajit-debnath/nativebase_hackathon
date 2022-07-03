@@ -10,6 +10,7 @@ import {
     Image,
     Input,
     useToast,
+    Badge,
 } from "native-base";
 import React,{useState,useEffect} from "react";
 import loadingImage from "../assets/loading.png";
@@ -26,6 +27,7 @@ function LoadItem({
     prod_type,
     max_amount,
     id,
+    isActive,
     navigation
 }) {
     const [isCarrier, setIsCarrier] = useState(false);
@@ -38,7 +40,6 @@ function LoadItem({
 
     const onSubmit =async () => {
         const user_id = await authHelper.getToken()
-        console.log("testestse",id,user_id,bidAmount)
         const response = await apis.addBid(id, user_id, bidAmount)
         if(response.status == "success")
              toast.show({
@@ -50,7 +51,6 @@ function LoadItem({
                 description: "Some Error Occured While Bidding.",
                 bgColor: "red.600",
             });
-        console.log(response)
     }
     return (
         <Box px={3} py={3} bgColor={"white"} rounded={10} mb={4}>
@@ -62,7 +62,8 @@ function LoadItem({
                             source={loadingImage}
                             alt="Alternate Text"
                         />
-                        <Text bold>{loadingPoint}</Text>
+                        <Text bold>Source: {loadingPoint}</Text>
+                        <Badge ml={70} variant="outline" colorScheme={isActive ? "warning" : "success"}>{isActive ? "Load Created" : "Trip Created" }</Badge>
                     </HStack>
                     <HStack space={5} alignItems={"center"}>
                         <Image
@@ -70,7 +71,7 @@ function LoadItem({
                             source={unloadingImage}
                             alt="Alternate Text"
                         />
-                        <Text bold>{unloadingPoint}</Text>
+                        <Text bold>Destination: {unloadingPoint}</Text>
                     </HStack>
                 </Box>
                 <Box mt={1}>
@@ -80,7 +81,7 @@ function LoadItem({
                         </Text>
 
                         <Text ml={120} bold color={"blueGray.500"}>
-                            Max Bid: Rs. {max_amount}
+                            Budget: Rs. {max_amount}
                         </Text>
                     </HStack>
 
@@ -95,10 +96,7 @@ function LoadItem({
                             <Button onPress={onSubmit}>Submit</Button>
                         </HStack>
                             :
-                        <Button ml={215} bgColor="blueGray.800"
-                                onPress={()=> console.log()}  >
-                            Bids
-                    </Button>}
+                        null}
                         
                     </HStack>
                 </Box>
