@@ -59,9 +59,9 @@ export default function RegisterForm({ isCarrierUser, changeUserMode }) {
         );
 
         if (result.status === "success") {
-            await authHelper.setToken(result.data?._id);
+            await authHelper.setToken(result.data?.id);
             await authHelper.setUserType(result.data?.userType);
-            return setIsSignedIn(Boolean(result.data?._id));
+            return setIsSignedIn(Boolean(result.data?.id));
         }
 
         return toast.show({
@@ -206,11 +206,11 @@ export default function RegisterForm({ isCarrierUser, changeUserMode }) {
                                 isDisabled={otpSent}
                             >
                                 {Object.values(vehicleList).map(
-                                    ({ _id, name, capacity, unit }) => (
+                                    ({ id, name, capacity, unit }) => (
                                         <Select.Item
-                                            key={_id}
+                                            key={id}
                                             label={`${name} - ${capacity}${unit}`}
-                                            value={_id}
+                                            value={id}
                                         />
                                     )
                                 )}

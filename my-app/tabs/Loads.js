@@ -36,28 +36,32 @@ export default function Loads(props) {
         }
     }, [loadPostModalVisible]);
 
-    useEffect(async ()=> {
-        setShowFab(await authHelper.getUserType() == "FREIGHTER") 
-    },[])
+    useEffect(async () => {
+        setShowFab((await authHelper.getUserType()) == "FREIGHTER");
+    }, []);
 
     return (
         <Container safeArea px={3} py={3} position="relative">
             <FlatList
                 width={370}
                 data={data}
-                renderItem={({ item }) => <LoadItem navigation = {props.navigation} {...item} />}
+                renderItem={({ item }) => (
+                    <LoadItem navigation={props.navigation} {...item} />
+                )}
                 keyExtractor={(item) => item.id}
             />
-            {showFab && (props.route.name == "Loads") ? <Fab
-                position="absolute"
-                shadow={2}
-                bottom="20"
-                height="12"
-                width="12"
-                bgColor="blueGray.700"
-                onPress={() => setLoadPostModalVisible(true)}
-                icon={<AddIcon />}
-            /> : null}
+            {showFab && props.route?.name == "Loads" ? (
+                <Fab
+                    position="absolute"
+                    shadow={2}
+                    bottom="20"
+                    height="12"
+                    width="12"
+                    bgColor="blueGray.700"
+                    onPress={() => setLoadPostModalVisible(true)}
+                    icon={<AddIcon />}
+                />
+            ) : null}
 
             <LoadPostModel
                 isOpen={loadPostModalVisible}
